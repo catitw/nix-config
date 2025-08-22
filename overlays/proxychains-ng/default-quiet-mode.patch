@@ -1,0 +1,48 @@
+diff --git a/completions/zsh/_proxychains4 b/completions/zsh/_proxychains4
+index b40c597..e071a88 100644
+--- a/completions/zsh/_proxychains4
++++ b/completions/zsh/_proxychains4
+@@ -2,7 +2,7 @@
+ 
+ _arguments \
+   '(- : *)--help[More help in README file]' \
+-  '-q[makes proxychains quiet - this overrides the config setting]' \
++  '-Q[makes proxychains not quiet - this overrides the config setting]' \
+   '-f[allows one to manually specify a configfile to use]: :_files' \
+   '(-)1: :{_command_names -e}' \
+   '*:: :_normal'
+diff --git a/src/main.c b/src/main.c
+index 381c71c..07b3a44 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -24,8 +24,8 @@
+ #include "common.h"
+ 
+ static int usage(char **argv) {
+-	printf("\nUsage:\t%s -q -f config_file program_name [arguments]\n"
+-	       "\t-q makes proxychains quiet - this overrides the config setting\n"
++	printf("\nUsage:\t%s -Q -f config_file program_name [arguments]\n"
++	       "\t-Q makes proxychains not quiet - this overrides the config setting\n"
+ 	       "\t-f allows one to manually specify a configfile to use\n"
+ 	       "\tfor example : proxychains telnet somehost.com\n" "More help in README file\n\n", argv[0]);
+ 	return EXIT_FAILURE;
+@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
+ 	char buf[256];
+ 	char pbuf[256];
+ 	int start_argv = 1;
+-	int quiet = 0;
++	int quiet = 1;
+ 	size_t i;
+ 	const char *prefix = NULL;
+ 
+@@ -79,8 +79,8 @@ int main(int argc, char *argv[]) {
+ 
+ 	for(i = 0; i < MAX_COMMANDLINE_FLAGS; i++) {
+ 		if(start_argv < argc && argv[start_argv][0] == '-') {
+-			if(argv[start_argv][1] == 'q') {
+-				quiet = 1;
++			if(argv[start_argv][1] == 'Q') {
++				quiet = 0;
+ 				start_argv++;
+ 			} else if(argv[start_argv][1] == 'f') {
+ 

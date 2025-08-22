@@ -1,0 +1,138 @@
+# [flake output schema](https://nixos.wiki/wiki/Flakes#Output_schema)
+
+{
+  self,
+  nixpkgs,
+  nixos-generators,
+  pre-commit-hooks,
+  ...
+}@inputs:
+let
+  inherit (inputs.nixpkgs) lib;
+  mylib = import ../lib { inherit lib; };
+  myvars = import ../vars { inherit lib; };
+
+  # Add my custom lib, vars, nixpkgs instance, and all the inputs to specialArgs,
+  # so that I can use them in all my nixos/home-manager/darwin modules.
+  genSpecialArgs =
+    system:
+    inputs
+    // {
+      inherit mylib myvars;
+
+      # https://nixos-and-flakes.thiscute.world/nixos-with-flakes/downgrade-or-upgrade-packages
+
+      # use unstable branch for some packages to get the latest updates
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system; # refer the `system` parameter form outer scope recursively
+        # To use chrome, we need to allow the installation of non-free software
+        config.allowUnfree = true;
+      };
+      pkgs-stable = import inputs.nixpkgs-stable {
+        inherit system;
+        # To use chrome, we need to allow the installation of non-free software
+        config.allowUnfree = true;
+      };
+
+      pkgs-x64 = import nixpkgs {
+        system = "x86_64-linux";
+
+        # To use chrome, we need to allow the installation of non-free software
+        config.allowUnfree = true;
+      };
+    };
+
+  # This is the args for all the haumea modules in this folder.
+  args = {
+    inherit
+      inputs
+      lib
+      mylib
+      myvars
+      genSpecialArgs
+      ;
+  };
+
+  # modules for each supported system
+  nixosSystems = {
+    x86_64-linux = import ./x86_64-linux (args // { system = "x86_64-linux"; });
+    # aarch64-linux = import ./aarch64-linux (args // { system = "aarch64-linux"; });
+    # riscv64-linux = import ./riscv64-linux (args // {system = "riscv64-linux";});
+  };
+  darwinSystems = {
+    # aarch64-darwin = import ./aarch64-darwin (args // { system = "aarch64-darwin"; });
+  };
+
+  nixosSystemValues = builtins.attrValues nixosSystems;
+  allSystems = nixosSystems // darwinSystems;
+  allSystemNames = builtins.attrNames allSystems;
+
+  # Helper function to generate a set of attributes for each system
+  forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
+
+  vmConf = {
+    system = "x86_64-linux";
+
+    specialArgs = inputs // {
+      inherit mylib myvars;
+    };
+
+    modules = [
+      { networking.hostName = "vm-machine"; }
+
+      ../modules/base
+      ../modules/nixos/base/core.nix
+      ../modules/nixos/base/i18n.nix
+      ../modules/nixos/base/user-group.nix
+      ../modules/nixos/base/ssh.nix
+
+      ../hosts/vm-machine/hardware-configuration.nix
+    ];
+  };
+
+in
+{
+  debugAttrs = {
+    inherit
+      mylib
+      myvars
+      nixosSystems
+      nixosSystemValues
+      ;
+  };
+
+  nixosConfigurations = lib.attrsets.mergeAttrsList (
+    map (it: it.nixosConfigurations or { }) nixosSystemValues
+  );
+
+  # Packages
+  packages = forAllSystems (system: allSystems.${system}.packages or { });
+
+  # Format the nix code in this flake
+  formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+
+  # nixosConfigurations = {
+  #   vm-machine = nixpkgs.lib.nixosSystem vmConf;
+  # };
+
+  # packages.${vmConf.system} = {
+  #   # vbox = nixos-generators.nixosGenerate {
+  #   #   system = vm.system;
+  #   #   modules = vm.modules;
+  #   #   format = "virtualbox";
+  #   # };
+
+  #   # nix build .#vm
+  #   # vm = nixos-generators.nixosGenerate {
+  #   #   system = vm.system;
+  #   #   modules = vm.modules;
+  #   #   format = "vm";
+  #   # };
+
+  #   # nix build .#vm
+  #   # nix build .#vm --option substituters "https://mirrors.ustc.edu.cn/nix-channels/store  https://cache.nixos.org/"
+  #   # https://nix.dev/tutorials/nixos/nixos-configuration-on-vm
+  #   vm = nixos-generators.nixosGenerate (vmConf // { format = "vm"; });
+  # };
+
+}
