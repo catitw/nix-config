@@ -1,7 +1,3 @@
-{ ... }@args:
-{
-  nixpkgs.overlays = [
-
-  ]
-  ++ (import ../../overlays args);
+{ fenix, ... }@args: {
+  nixpkgs.overlays = [ fenix.overlays.default ] ++ (import ../../overlays args);
 }
