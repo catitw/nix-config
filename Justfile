@@ -18,7 +18,9 @@ up:
 # Rebuild and switch to new configuration
 [group('nix')]
 switch:
-  nixos-rebuild switch --sudo --flake .#$(hostname) |& nom
+  # https://github.com/NixOS/nix/issues/1952#issuecomment-373928543
+  nix build --no-link ".#nixosConfigurations.$(hostname).config.system.build.toplevel" --print-build-logs --show-trace --verbose 
+  nixos-rebuild switch --sudo --flake .#$(hostname) --log-format bar-with-logs
 
 # Garbage collect all unused nix store entries
 [group('nix')]
