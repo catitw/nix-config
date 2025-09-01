@@ -1,6 +1,13 @@
-{ pkgs, config, ... }:
 {
-  home.packages = with pkgs; [
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+
+  # https://wiki.nixos.org/wiki/Fonts
+  fonts.packages = with pkgs; [
     # icon fonts
     material-design-icons
     font-awesome

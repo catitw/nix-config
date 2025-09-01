@@ -11,18 +11,29 @@
   ...
 }@args:
 let
-  name = "vm-machine";
+  name = "ren16-laptop";
 
   modules-base = {
-    nixos-modules = map mylib.relativeToRoot [
+    nixos-modules = [
+      {
+        # https://wiki.nixos.org/wiki/KDE#Bluetooth_configuration_not_available
+        hardware.bluetooth.enable = true;
+      }
+      {
+        nixpkgs.config.allowUnfree = lib.mkForce true;
+      }
+    ]
+    ++ map mylib.relativeToRoot [
       "modules/base"
       "modules/nixos/base"
+      "modules/nixos/desktop"
       "hosts/${name}"
     ];
 
     home-modules = map mylib.relativeToRoot [
       "home/linux/core"
       "home/linux/tui"
+      "home/linux/gui"
     ];
   };
 
