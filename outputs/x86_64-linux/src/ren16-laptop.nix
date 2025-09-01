@@ -14,6 +14,13 @@ let
   name = "ren16-laptop";
 
   modules-base = {
+
+    preference-modules = [
+      {
+        opts.defaultShell = "fish";
+      }
+    ];
+
     nixos-modules = [
       {
         # https://wiki.nixos.org/wiki/KDE#Bluetooth_configuration_not_available
