@@ -19,6 +19,11 @@ let
       {
         opts.defaultShell = "fish";
       }
+      {
+        opts.terminal.foot.enable = true;
+        opts.terminal.alacritty.enable = false;
+        opts.terminal.wezterm.enable = false;
+      }
     ];
 
     nixos-modules = [
