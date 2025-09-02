@@ -21,8 +21,8 @@ let
     ];
 
     home-modules = map mylib.relativeToRoot [
-      "home/linux/core"
-      "home/linux/tui"
+      "home/nixos/core"
+      "home/nixos/tui"
     ];
   };
 
@@ -43,7 +43,7 @@ in
       modules-base
       ;
 
-    tui = import (mylib.relativeToRoot "home/linux/tui") args;
+    tui = import (mylib.relativeToRoot "home/nixos/tui") args;
   };
 
   nixosConfigurations = {

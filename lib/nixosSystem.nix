@@ -13,11 +13,13 @@
 let
   inherit (inputs) nixpkgs home-manager nixos-generators;
   system-options-modules = map mylib.relativeToRoot [
-    "options/nixos/system"
+    "options/system/base"
+    "options/system/nixos"
   ];
 
   home-options-modules = map mylib.relativeToRoot [
-    "options/nixos/home"
+    "options/home/base"
+    "options/home/nixos"
   ];
 in
 # [Simple Introduction to nixpkgs.lib.nixosSystem Function](https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-configuration-explained#simple-introduction-to-nixpkgs-lib-nixos-system)

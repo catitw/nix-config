@@ -3,10 +3,6 @@
   ...
 }:
 {
-  options.opts.terminal.foot = {
-    enable = lib.mkEnableOption "the foot program and configuration";
-    default = true;
-  };
 
   options.opts.terminal.alacritty = {
     enable = lib.mkEnableOption "the alacritty program and configuration";
