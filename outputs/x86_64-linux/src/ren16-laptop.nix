@@ -14,24 +14,28 @@ let
   name = "ren16-laptop";
 
   modules-base = {
-
-    preference-modules = [
-      {
-        opts.defaultShell = "fish";
-      }
-      {
-        opts.terminal.foot.enable = true;
-        opts.terminal.alacritty.enable = false;
-        opts.terminal.wezterm.enable = false;
-      }
-    ];
-
     nixos-modules = [
+      {
+        opts.nvidia = {
+          enable = true;
+          open = true;
+          powerManagement = {
+            enable = false;
+            finegrained = false;
+          };
+          prime = {
+            mode = "offload";
+            enableOffloadCmd = true;
+            integratedType = "intel";
+            intelBusId = "PCI:0:2:0";
+            nvidiaBusId = "PCI:1:0:0";
+          };
+        };
+      }
       {
         # https://wiki.nixos.org/wiki/KDE#Bluetooth_configuration_not_available
         hardware.bluetooth.enable = true;
-      }
-      {
+
         nixpkgs.config.allowUnfree = lib.mkForce true;
       }
     ]
@@ -42,7 +46,16 @@ let
       "hosts/${name}"
     ];
 
-    home-modules = map mylib.relativeToRoot [
+    home-modules = [
+      {
+        opts.defaultShell = "fish";
+
+        opts.terminal.foot.enable = true;
+        opts.terminal.alacritty.enable = false;
+        opts.terminal.wezterm.enable = false;
+      }
+    ]
+    ++ map mylib.relativeToRoot [
       "home/linux/core"
       "home/linux/tui"
       "home/linux/gui"
