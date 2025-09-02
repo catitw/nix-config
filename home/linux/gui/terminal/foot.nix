@@ -28,9 +28,19 @@ in
           term = "foot"; # or "xterm-256color" for maximum compatibility
           font = "Maple Mono NF CN:size=14";
           dpi-aware = "no"; # scale via window manager instead
+          initial-window-size-chars = "160x40";
 
           # Spawn a nushell in login mode via `bash`
           # shell = "${pkgs.bash}/bin/bash --login -c 'nu --login --interactive'";
+        };
+
+        key-bindings = {
+          scrollback-up-half-page = "Page_Up";
+          scrollback-down-half-page = "Page_Down";
+          font-increase = "Control+Shift+plus";
+          font-decrease = "Control+Shift+minus";
+          font-reset = "Control+Shift+0";
+          quit = "Control+Shift+q";
         };
 
         mouse = {
