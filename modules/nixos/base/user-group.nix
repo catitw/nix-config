@@ -14,8 +14,7 @@
   };
 
   users.users."${myvars.username}" = {
-    # we have to use initialHashedPassword here when using tmpfs for /
-    inherit (myvars) initialHashedPassword;
+    hashedPasswordFile = config.sops.secrets.password_hash.path;
     home = "/home/${myvars.username}";
     isNormalUser = true;
     extraGroups = [
@@ -27,11 +26,4 @@
       "wireshark"
     ];
   };
-
-  # TODO
-  # root's ssh key are mainly used for remote deployment
-  # users.users.root = {
-  #   inherit (myvars) initialHashedPassword;
-  #   openssh.authorizedKeys.keys = myvars.mainSshAuthorizedKeys ++ myvars.secondaryAuthorizedKeys;
-  # };
 }

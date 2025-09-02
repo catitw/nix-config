@@ -48,6 +48,8 @@
     # security
     libargon2
     openssl
+    age
+    sops
 
     # dev
     gcc

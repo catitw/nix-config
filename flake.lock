@@ -137,6 +137,23 @@
         "type": "github"
       }
     },
+    "my-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756802377,
+        "narHash": "sha256-pCBsRYQNImCo2jwCurUx+QW91SIoxrZnKwWmPpq1N7s=",
+        "ref": "refs/heads/main",
+        "rev": "fd50a2727bf57dd49d4c7f34717ccffd7f96ed61",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/catitw/nix-secrets.git"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/catitw/nix-secrets.git"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1736643958,
@@ -250,11 +267,13 @@
         "haumea": "haumea",
         "home-manager": "home-manager",
         "my-lazyvim": "my-lazyvim",
+        "my-secrets": "my-secrets",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pre-commit-hooks": "pre-commit-hooks"
+        "pre-commit-hooks": "pre-commit-hooks",
+        "sops-nix": "sops-nix"
       }
     },
     "rust-analyzer-src": {
@@ -271,6 +290,26 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1754988908,
+        "narHash": "sha256-t+voe2961vCgrzPFtZxha0/kmFSHFobzF00sT8p9h0U=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "3223c7a92724b5d804e9988c6b447a0d09017d48",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     }

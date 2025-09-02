@@ -50,10 +50,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ###############################  My own repositories  ###############################
 
     my-lazyvim = {
       url = "github:catitw/LazyVim";
+      flake = false;
+    };
+
+    # my private secrets, it's a private repository, you need to replace it with your own.
+    # use ssh protocol to authenticate via ssh-agent/ssh-key, and shallow clone to save time
+    my-secrets = {
+      url = "git+ssh://git@github.com/catitw/nix-secrets.git?shallow=1";
       flake = false;
     };
 

@@ -11,7 +11,7 @@
   ...
 }:
 let
-  inherit (inputs) nixpkgs home-manager nixos-generators;
+  inherit (inputs) nixpkgs home-manager sops-nix;
   system-options-modules = map mylib.relativeToRoot [
     "options/system/base"
     "options/system/nixos"
@@ -30,7 +30,8 @@ nixpkgs.lib.nixosSystem {
     system-options-modules
     ++ nixos-modules
     ++ [
-      # nixos-generators.nixosModules.all-formats
+      sops-nix.nixosModules.sops
+      (mylib.relativeToRoot "secrets/nixos.nix")
     ]
     ++ (lib.optionals ((lib.lists.length home-modules) > 0) [
 
