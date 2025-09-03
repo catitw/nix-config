@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.opts.nvidia;
+  cfg = config.sys-opts.nvidia;
 in
 {
   # https://nixos.wiki/wiki/Nvidia
   # https://discourse.nixos.org/t/there-are-3-nvidia-wiki-pages-for-nixos/64066
-  options.opts.nvidia = {
+  options.sys-opts.nvidia = {
     enable = lib.mkEnableOption "Enable NVIDIA driver and optional PRIME configuration.";
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -135,15 +135,15 @@ in
       assertions = [
         {
           assertion = !(needPrime && primeCfg.nvidiaBusId == null);
-          message = "opts.nvidia.prime: PRIME mode selected but nvidiaBusId is not set.";
+          message = "sys-opts.nvidia.prime: PRIME mode selected but nvidiaBusId is not set.";
         }
         {
           assertion = !(needPrime && integratedIsIntel && primeCfg.intelBusId == null);
-          message = "opts.nvidia.prime: integratedType=intel with PRIME requires intelBusId.";
+          message = "sys-opts.nvidia.prime: integratedType=intel with PRIME requires intelBusId.";
         }
         {
           assertion = !(needPrime && (!integratedIsIntel) && primeCfg.amdgpuBusId == null);
-          message = "opts.nvidia.prime: integratedType=amd with PRIME requires amdgpuBusId.";
+          message = "sys-opts.nvidia.prime: integratedType=amd with PRIME requires amdgpuBusId.";
         }
       ];
 

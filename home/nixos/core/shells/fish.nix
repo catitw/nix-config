@@ -5,7 +5,7 @@
   ...
 }:
 let
-  enabled = config.opts.defaultShell == "fish";
+  enabled = config.home-opts.defaultShell == "fish";
 in
 {
   config = lib.mkIf enabled {

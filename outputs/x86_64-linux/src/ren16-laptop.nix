@@ -16,7 +16,7 @@ let
   modules-base = {
     nixos-modules = [
       {
-        opts.nvidia = {
+        sys-opts.nvidia = {
           enable = true;
           open = true;
           powerManagement = {
@@ -48,11 +48,14 @@ let
 
     home-modules = [
       {
-        opts.defaultShell = "fish";
-
-        opts.terminal.foot.enable = true;
-        opts.terminal.alacritty.enable = false;
-        opts.terminal.wezterm.enable = false;
+        home-opts = {
+          defaultShell = "fish";
+          terminal = {
+            foot.enable = true;
+            alacritty.enable = false;
+            wezterm.enable = false;
+          };
+        };
       }
     ]
     ++ map mylib.relativeToRoot [

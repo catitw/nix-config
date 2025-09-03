@@ -3,7 +3,7 @@
   ...
 }:
 {
-  options.opts.defaultShell = lib.mkOption {
+  options.home-opts.defaultShell = lib.mkOption {
     type = lib.types.enum [
       "nushell"
       "fish"

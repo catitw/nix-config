@@ -4,7 +4,7 @@
   ...
 }:
 let
-  enabled = config.opts.defaultShell == "nushell";
+  enabled = config.home-opts.defaultShell == "nushell";
 in
 {
   config = lib.mkIf enabled {

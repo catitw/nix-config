@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.opts.terminal.wezterm;
+  cfg = config.home-opts.terminal.wezterm;
 in
 {
   config = lib.mkIf cfg.enable {

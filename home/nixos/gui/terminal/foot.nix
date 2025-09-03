@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfg = config.opts.terminal.foot;
+  cfg = config.home-opts.terminal.foot;
 in
 {
   config = lib.mkIf cfg.enable {
