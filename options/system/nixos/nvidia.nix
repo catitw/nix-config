@@ -85,7 +85,7 @@ in
       enableOffloadCmd = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Only relevant in offload mode: whether to enable the offload-run wrapper command.";
+        description = "Only relevant in offload mode: whether to provide the `nvidia-offload` script.";
       };
 
       allowExternalGpu = lib.mkOption {
@@ -118,55 +118,14 @@ in
     let
       primeCfg = cfg.prime;
       needPrime = primeCfg.mode != "none";
-
-      integratedBusId =
-        if primeCfg.integratedType == "intel" then primeCfg.intelBusId else primeCfg.amdgpuBusId;
-
-      # Mode-specific enabling attributes
-      primeModeAttrs =
-        if !needPrime then
-          { }
-        else if primeCfg.mode == "offload" then
-          {
-            prime.offload.enable = true;
-            prime.offload.enableOffloadCmd = primeCfg.enableOffloadCmd;
-          }
-        else if primeCfg.mode == "sync" then
-          {
-            prime.sync.enable = true;
-          }
-        else
-          {
-            # reverseSync
-            prime.reverseSync.enable = true;
-            prime.reverseSync.allowExternalGpu = primeCfg.allowExternalGpu;
-          };
-
-      # Bus IDs (added only when PRIME is active)
-      primeBusAttrs =
-        if !needPrime then
-          { }
-        else
-          (
-            if primeCfg.integratedType == "intel" then
-              {
-                prime.intelBusId = integratedBusId;
-              }
-            else
-              {
-                prime.amdgpuBusId = integratedBusId;
-              }
-          )
-          // {
-            prime.nvidiaBusId = primeCfg.nvidiaBusId;
-          };
+      integratedIsIntel = primeCfg.integratedType == "intel";
 
       videoDrivers =
         if !needPrime then
           [ "nvidia" ]
         else if primeCfg.mode == "offload" then
           [
-            (if primeCfg.integratedType == "intel" then "modesetting" else "amdgpu")
+            (if integratedIsIntel then "modesetting" else "amdgpu")
             "nvidia"
           ]
         else
@@ -179,11 +138,11 @@ in
           message = "opts.nvidia.prime: PRIME mode selected but nvidiaBusId is not set.";
         }
         {
-          assertion = !(needPrime && primeCfg.integratedType == "intel" && primeCfg.intelBusId == null);
+          assertion = !(needPrime && integratedIsIntel && primeCfg.intelBusId == null);
           message = "opts.nvidia.prime: integratedType=intel with PRIME requires intelBusId.";
         }
         {
-          assertion = !(needPrime && primeCfg.integratedType == "amd" && primeCfg.amdgpuBusId == null);
+          assertion = !(needPrime && (!integratedIsIntel) && primeCfg.amdgpuBusId == null);
           message = "opts.nvidia.prime: integratedType=amd with PRIME requires amdgpuBusId.";
         }
       ];
@@ -211,9 +170,38 @@ in
 
         # you may need to select the appropriate driver version for your specific GPU.
         package = cfg.package;
-      }
-      // primeModeAttrs
-      // primeBusAttrs;
+
+        prime = lib.optionalAttrs needPrime (
+          {
+            # all mode needs
+            nvidiaBusId = primeCfg.nvidiaBusId;
+          }
+          # integrated gpu id, by intel or amd
+          // lib.optionalAttrs integratedIsIntel {
+            intelBusId = primeCfg.intelBusId;
+          }
+          // lib.optionalAttrs (!integratedIsIntel) {
+            amdgpuBusId = primeCfg.amdgpuBusId;
+          }
+
+          # mode branch: offload
+          // lib.optionalAttrs (primeCfg.mode == "offload") {
+            offload.enable = true;
+            offload.enableOffloadCmd = primeCfg.enableOffloadCmd;
+          }
+          # mode branch: sync
+          // lib.optionalAttrs (primeCfg.mode == "sync") {
+            sync.enable = true;
+          }
+
+          # mode branch: reverseSync
+          // lib.optionalAttrs (primeCfg.mode == "reverseSync") {
+            reverseSync.enable = true;
+            reverseSync.allowExternalGpu = primeCfg.allowExternalGpu;
+          }
+        );
+
+      };
     }
   );
 }
