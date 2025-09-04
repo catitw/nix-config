@@ -70,26 +70,6 @@ let
   # Helper function to generate a set of attributes for each system
   forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
 
-  vmConf = {
-    system = "x86_64-linux";
-
-    specialArgs = inputs // {
-      inherit mylib myvars;
-    };
-
-    modules = [
-      { networking.hostName = "vm-machine"; }
-
-      ../modules/base
-      ../modules/nixos/base/core.nix
-      ../modules/nixos/base/i18n.nix
-      ../modules/nixos/base/user-group.nix
-      ../modules/nixos/base/ssh.nix
-
-      ../hosts/vm-machine/hardware-configuration.nix
-    ];
-  };
-
 in
 {
   debugAttrs = {
@@ -110,29 +90,4 @@ in
 
   # Format the nix code in this flake
   formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
-
-  # nixosConfigurations = {
-  #   vm-machine = nixpkgs.lib.nixosSystem vmConf;
-  # };
-
-  # packages.${vmConf.system} = {
-  #   # vbox = nixos-generators.nixosGenerate {
-  #   #   system = vm.system;
-  #   #   modules = vm.modules;
-  #   #   format = "virtualbox";
-  #   # };
-
-  #   # nix build .#vm
-  #   # vm = nixos-generators.nixosGenerate {
-  #   #   system = vm.system;
-  #   #   modules = vm.modules;
-  #   #   format = "vm";
-  #   # };
-
-  #   # nix build .#vm
-  #   # nix build .#vm --option substituters "https://mirrors.ustc.edu.cn/nix-channels/store  https://cache.nixos.org/"
-  #   # https://nix.dev/tutorials/nixos/nixos-configuration-on-vm
-  #   vm = nixos-generators.nixosGenerate (vmConf // { format = "vm"; });
-  # };
-
 }

@@ -71,16 +71,6 @@ let
     ];
   };
 
-  # modules-hyprland = {
-  #   nixos-modules = [
-  #   ]
-  #   ++ modules-base.nixos-modules;
-
-  #   home-modules = [
-  #     { modules.desktop.hyprland.enable = true; }
-  #   ]
-  #   ++ modules-base.home-modules;
-  # };
 in
 {
   debugAttrs = {
