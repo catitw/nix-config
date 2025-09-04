@@ -16,19 +16,26 @@ let
   modules-base = {
     nixos-modules = [
       {
-        sys-opts.nvidia = {
-          enable = true;
-          open = true;
-          powerManagement = {
-            enable = false;
-            finegrained = false;
+        sys-opts = {
+          nvidia = {
+            enable = true;
+            open = true;
+            powerManagement = {
+              enable = false;
+              finegrained = false;
+            };
+            prime = {
+              mode = "offload";
+              enableOffloadCmd = true;
+              integratedType = "intel";
+              intelBusId = "PCI:0:2:0";
+              nvidiaBusId = "PCI:1:0:0";
+            };
           };
-          prime = {
-            mode = "offload";
-            enableOffloadCmd = true;
-            integratedType = "intel";
-            intelBusId = "PCI:0:2:0";
-            nvidiaBusId = "PCI:1:0:0";
+
+          de = {
+            kde.enable = true;
+            hyprland.enable = true;
           };
         };
       }
@@ -59,9 +66,8 @@ let
       }
     ]
     ++ map mylib.relativeToRoot [
-      "home/nixos/core"
-      "home/nixos/tui"
-      "home/nixos/gui"
+      "home/base"
+      "home/nixos"
     ];
   };
 
