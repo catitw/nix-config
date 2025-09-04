@@ -1,7 +1,13 @@
-{ ... }:
+{ lib, osConfig, ... }:
+let
+  cfg = osConfig.sys-opts.de.hyprland;
+in
 {
-  # https://mynixos.com/options/programs.rofi
-  programs.rofi = {
-    enable = true;
+
+  config = lib.mkIf cfg.enable {
+    # https://mynixos.com/options/programs.rofi
+    programs.rofi = {
+      enable = true;
+    };
   };
 }
