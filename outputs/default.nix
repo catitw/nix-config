@@ -85,6 +85,31 @@ in
     map (it: it.nixosConfigurations or { }) nixosSystemValues
   );
 
+  # Development Shells
+  devShells = forAllSystems (
+    system:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      # run `nix develop ~/nix-config` to activate
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          # fix https://discourse.nixos.org/t/non-interactive-bash-errors-from-flake-nix-mkshell/33310
+          bashInteractive
+
+          # build system
+          pkg-config
+          cmake
+
+          # libs
+          zlib
+          openssl
+        ];
+      };
+    }
+  );
+
   # Packages
   packages = forAllSystems (system: allSystems.${system}.packages or { });
 

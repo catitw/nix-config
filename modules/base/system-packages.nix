@@ -54,10 +54,9 @@
     # dev
     gcc
     gnumake
-    cmake
+    bear
     ninja
     meson
-    pkg-config
     python3Full
 
     # misc
