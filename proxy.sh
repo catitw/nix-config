@@ -76,8 +76,6 @@ if [ $UNDO -eq 1 ]; then
   ensure_root
   if [ -f "${DROPIN_FILE}" ]; then
     rm -f "${DROPIN_FILE}"
-  else
-    # No drop-in file found at ${DROPIN_FILE}; nothing to remove.
   fi
   systemctl daemon-reload
   systemctl restart nix-daemon
