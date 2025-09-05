@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    go
-    gopls
-    delve # debugger
+    stylua # formatter
+    selene # linter
+    lua-language-server # lsp
   ];
 }

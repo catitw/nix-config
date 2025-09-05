@@ -19,8 +19,8 @@ return {
   {
     "AstroNvim/astrolsp",
     optional = true,
-    opts = {
-      config = {
+    opts = function(_, opts)
+      opts.config = vim.tbl_deep_extend("keep", opts.config, {
         lua_ls = {
           settings = {
             Lua = {
@@ -31,8 +31,10 @@ return {
             },
           },
         },
-      },
-    },
+      })
+
+      require("astrocore").list_insert_unique(opts.servers, { "lua_ls" })
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",

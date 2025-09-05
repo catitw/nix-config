@@ -8,11 +8,5 @@
     fd
     ripgrep
     tree-sitter
-
-
-    # lua
-    stylua # lua formatter
-    selene # lua linter
-    lua-language-server # lua lsp
   ];
 }

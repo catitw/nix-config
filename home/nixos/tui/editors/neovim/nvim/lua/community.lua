@@ -9,4 +9,5 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
 
   { import = "community-fork.pack.lua" },
+  { import = "community-fork.pack.cpp" },
 }
