@@ -57,9 +57,9 @@
 
     ###############################  My own repositories  ###############################
 
-    my-lazyvim = {
-      url = "github:catitw/LazyVim";
-      flake = false;
+    my-nvim-conf = {
+      url = "github:catitw/nvim-config-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # my private secrets, it's a private repository, you need to replace it with your own.

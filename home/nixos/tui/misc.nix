@@ -1,7 +1,13 @@
 {
+  pkgs,
   ...
 }:
 {
+  home.packages = with pkgs; [
+    fzf
+    fd
+    ripgrep
+  ];
 
   programs = {
     # Git terminal UI (written in go).
