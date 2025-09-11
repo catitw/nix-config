@@ -150,14 +150,15 @@
         "nixCats": "nixCats",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "plugins-wildfire": "plugins-wildfire"
       },
       "locked": {
-        "lastModified": 1757559716,
-        "narHash": "sha256-loa3IOvufeFWC6jALe2oGJJ8ZXPRvifhtdhLA4W0kA4=",
+        "lastModified": 1757572890,
+        "narHash": "sha256-an2XS9Cgzg75k+FLgR1PEf3b87fHfcNaD+sCsZBnDUI=",
         "owner": "catitw",
         "repo": "nvim-config-nix",
-        "rev": "0740f55f50a47ae9a5fd3b4d711226b5a1d65edc",
+        "rev": "985a87620bf52962cca6ca4923ac1852f92cd528",
         "type": "github"
       },
       "original": {
@@ -279,6 +280,22 @@
         "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugins-wildfire": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1692596265,
+        "narHash": "sha256-3eyKUJ/99TDJf7gRtWfA1EPKSa6o6ecHCUYDTzw7bog=",
+        "owner": "catitw",
+        "repo": "wildfire.nvim",
+        "rev": "1729faca1c6ae34520a6e531983a3737d3654ee1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catitw",
+        "repo": "wildfire.nvim",
         "type": "github"
       }
     },
