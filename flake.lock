@@ -155,11 +155,11 @@
         "plugins-wildfire": "plugins-wildfire"
       },
       "locked": {
-        "lastModified": 1757574820,
-        "narHash": "sha256-PEwk07LTljofLqhPKGN0P4W/j7qTVxjPWyFZNYo0e4M=",
+        "lastModified": 1757575803,
+        "narHash": "sha256-gTqBBQTt2QzTaEi26igYA3vW1x1dWlOeCcinl/KJ5rw=",
         "owner": "catitw",
         "repo": "nvim-config-nix",
-        "rev": "bdf5aa126e05217a572f2b96d04c87e2c4ebac7f",
+        "rev": "203b337675c664c1aeba35adebd9a62144eae0b3",
         "type": "github"
       },
       "original": {
