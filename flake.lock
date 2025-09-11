@@ -171,10 +171,10 @@
     "my-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1756802377,
-        "narHash": "sha256-pCBsRYQNImCo2jwCurUx+QW91SIoxrZnKwWmPpq1N7s=",
+        "lastModified": 1757577490,
+        "narHash": "sha256-Da3G/8cMHnTrNv6IT66v4RBv+Awos/+pTPdnRI7gk1s=",
         "ref": "refs/heads/main",
-        "rev": "fd50a2727bf57dd49d4c7f34717ccffd7f96ed61",
+        "rev": "5fd09571f01c5902b242ef75a7db93e7a4dd717e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/catitw/nix-secrets.git"
