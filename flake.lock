@@ -151,14 +151,15 @@
         "nixpkgs": [
           "nixpkgs"
         ],
+        "plugins-nvim-lsp-endhints": "plugins-nvim-lsp-endhints",
         "plugins-wildfire": "plugins-wildfire"
       },
       "locked": {
-        "lastModified": 1757572890,
-        "narHash": "sha256-an2XS9Cgzg75k+FLgR1PEf3b87fHfcNaD+sCsZBnDUI=",
+        "lastModified": 1757574820,
+        "narHash": "sha256-PEwk07LTljofLqhPKGN0P4W/j7qTVxjPWyFZNYo0e4M=",
         "owner": "catitw",
         "repo": "nvim-config-nix",
-        "rev": "985a87620bf52962cca6ca4923ac1852f92cd528",
+        "rev": "bdf5aa126e05217a572f2b96d04c87e2c4ebac7f",
         "type": "github"
       },
       "original": {
@@ -280,6 +281,22 @@
         "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugins-nvim-lsp-endhints": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757349613,
+        "narHash": "sha256-gfVE5XSGuf+aC/Pi+sGWsfgmWpQ6RvC9x+SMTRagdSM=",
+        "owner": "catitw",
+        "repo": "nvim-lsp-endhints",
+        "rev": "3d6f041620f4f233b1485392f6adffdae19fd6ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catitw",
+        "repo": "nvim-lsp-endhints",
         "type": "github"
       }
     },
