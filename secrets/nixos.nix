@@ -1,4 +1,10 @@
-{ mylib, my-secrets, ... }:
+{
+  mylib,
+  myvars,
+  my-secrets,
+  config,
+  ...
+}:
 {
   sops = {
     defaultSopsFile = mylib.relativeToRoot "secrets/.sops.yaml";
@@ -20,6 +26,29 @@
         owner = "root";
         group = "root";
         mode = "0400";
+      };
+      "zhipu_ai_key" = {
+        sopsFile = "${my-secrets}/zhipu-ai.yaml";
+        key = "api_key";
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+    };
+
+    templates = {
+      "opencode-auth.json" = {
+        content = ''
+          {
+            "zhipuai": {
+              "type": "api",
+              "key": "${config.sops.placeholder.zhipu_ai_key}"
+            }
+          }
+        '';
+        owner = myvars.username;
+        group = myvars.username;
+        mode = "0600";
       };
     };
   };
