@@ -57,7 +57,10 @@
     bear
     ninja
     meson
-    python3Full
+    # https://discourse.nixos.org/t/python-tkinter-not-available-on-linux/69037/2
+    (pkgs.python3.withPackages (python-pkgs: [
+      python-pkgs.tkinter
+    ]))
 
     # misc
     file
