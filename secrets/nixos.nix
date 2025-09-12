@@ -74,7 +74,7 @@
                   "type": "remote",
                   "url": "https://mcp.context7.com/mcp",
                   "headers": {
-                    "CONTEXT7_API_KEY": "${config.sops.placeholder.mcp_context7_key}"
+                    "Authorization": "Bearer ${config.sops.placeholder.mcp_context7_key}"
                   },
                   "enabled": true
                 }
