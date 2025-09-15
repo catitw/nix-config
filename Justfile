@@ -15,6 +15,12 @@ install:
 up:
   nix flake update --commit-lock-file
 
+# Update specific input
+# Usage: just upp nixpkgs
+[group('nix')]
+upp input:
+  nix flake update {{input}} --commit-lock-file
+
 # Rebuild and switch to new configuration
 [group('nix')]
 switch:
