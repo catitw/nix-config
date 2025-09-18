@@ -4,6 +4,6 @@
 }:
 {
   home.packages = with pkgs; [
-    feishu
+    jetbrains.rust-rover
   ];
 }
