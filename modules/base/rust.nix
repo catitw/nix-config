@@ -9,5 +9,6 @@
       "rustfmt"
     ])
     rust-analyzer-nightly
+    rustup
   ];
 }
