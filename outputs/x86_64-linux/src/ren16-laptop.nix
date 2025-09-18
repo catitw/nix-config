@@ -17,6 +17,8 @@ let
     nixos-modules = [
       {
         sys-opts = {
+          defaultShell = "fish";
+
           nvidia = {
             enable = true;
             open = true;
@@ -56,7 +58,6 @@ let
     home-modules = [
       {
         home-opts = {
-          defaultShell = "fish";
           terminal = {
             foot.enable = true;
             alacritty.enable = false;

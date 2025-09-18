@@ -3,12 +3,13 @@
   ...
 }:
 {
-  options.home-opts.defaultShell = lib.mkOption {
+  options.sys-opts.defaultShell = lib.mkOption {
     type = lib.types.enum [
+      "bash"
       "nushell"
       "fish"
     ];
-    default = "nushell";
+    default = "fish";
     description = ''
       Select the preferred interactive login shell for this user ("nushell" or "fish").
     '';
