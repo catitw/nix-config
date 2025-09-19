@@ -9,6 +9,6 @@
       "rustfmt"
     ])
     rust-analyzer-nightly
-    rustup
+    # rustup # note: install this will lead `RustRover` can not find rust-src
   ];
 }
